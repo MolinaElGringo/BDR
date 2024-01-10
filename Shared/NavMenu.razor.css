@@ -1,68 +1,87 @@
-.navbar-toggler {
-    background-color: rgba(255, 255, 255, 0.1);
+/* Fond médiéval avec une texture de parchemin */
+html, body {
+    background-color: #f3eac9;
+    background-repeat: repeat;
 }
 
+/* Barre supérieure stylisée avec une bannière médiévale */
 .top-row {
     height: 3.5rem;
-    background-color: rgba(0,0,0,0.4);
+    background-color: #8b4513; /* Brun médiéval */
+    color: #ffd700; /* Jaune médiéval */
 }
 
+/* Marque médiévale stylisée */
 .navbar-brand {
-    font-size: 1.1rem;
+    font-size: 1.5rem; /* Légère augmentation de la taille de la police */
+    font-family: 'Old English Text MT', sans-serif; /* Police médiévale */
+    color: #ffd700; /* Jaune médiéval */
 }
 
+/* Icônes stylisées avec une touche médiévale */
 .oi {
     width: 2rem;
-    font-size: 1.1rem;
+    font-size: 1.5rem; /* Légère augmentation de la taille de la police */
     vertical-align: text-top;
     top: -2px;
 }
 
+/* Éléments de menu médiévaux stylisés */
 .nav-item {
-    font-size: 0.9rem;
-    padding-bottom: 0.5rem;
+    font-size: 1rem; /* Légère augmentation de la taille de la police */
+    padding-bottom: 0.7rem; /* Ajustement de l'espacement */
 }
 
-    .nav-item:first-of-type {
-        padding-top: 1rem;
-    }
+.nav-item:first-of-type {
+    padding-top: 1.5rem; /* Ajustement de l'espacement en haut du premier élément du menu */
+}
 
-    .nav-item:last-of-type {
-        padding-bottom: 1rem;
-    }
+.nav-item:last-of-type {
+    padding-bottom: 1.5rem; /* Ajustement de l'espacement en bas du dernier élément du menu */
+}
 
-    .nav-item ::deep a {
-        color: #d7d7d7;
-        border-radius: 4px;
-        height: 3rem;
-        display: flex;
-        align-items: center;
-        line-height: 3rem;
-    }
+.nav-item ::deep a {
+    color: #8b4513; /* Brun médiéval */
+    border-radius: 4px;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    line-height: 3rem;
+}
 
+/* Styles médiévaux pour les états actif et survolé du lien */
 .nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
+    background-color: #8b4513; /* Brun médiéval pour l'état actif */
+    color: #ffd700; /* Jaune médiéval pour le texte actif */
 }
 
 .nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
+    background-color: #8b4513; /* Brun médiéval pour l'état survolé */
+    color: #ffd700; /* Jaune médiéval pour le texte survolé */
 }
 
+/* Styles médiévaux pour le bouton de bascule de la barre de navigation */
+.navbar-toggler {
+    background-color: rgba(255, 255, 255, 0.1); /* Fond transparent pour le bouton de bascule */
+    border: none; /* Suppression de la bordure */
+}
+
+/* Masquage du bouton de bascule pour les écrans larges */
 @media (min-width: 641px) {
     .navbar-toggler {
         display: none;
     }
 
+    /* Affichage complet de la barre de navigation pour les écrans larges */
     .collapse {
-        /* Never collapse the sidebar for wide screens */
         display: block;
     }
     
+    /* Sidebar avec un aspect médiéval pour les menus longs */
     .nav-scrollable {
-        /* Allow sidebar to scroll for tall menus */
         height: calc(100vh - 3.5rem);
         overflow-y: auto;
+        background-color: #f3eac9; /* Fond de parchemin pour la sidebar */
+        border-right: 2px solid #8b4513; /* Bordure brun médiéval à droite */
     }
 }
