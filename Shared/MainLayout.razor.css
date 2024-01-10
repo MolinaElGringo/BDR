@@ -2,11 +2,12 @@
     position: relative;
     display: flex;
     flex-direction: column;
-    background: url('/ressource/medievalFont.jpg') no-repeat center center;
 }
 
 main {
     flex: 1;
+    background : url('/ressource/medievalFont.jpg') no-repeat!important;
+    background-size: cover!important;
 }
 
 .sidebar {
