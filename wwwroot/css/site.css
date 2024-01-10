@@ -1,0 +1,63 @@
+/* Utilisation d'une police de caractères médiévale si disponible, sinon utilisez une alternative lisible */
+body {
+    font-family: 'Old English Text MT', sans-serif;
+}
+
+/* Fond médiéval avec une texture de parchemin */
+html, body {
+}
+
+/* En-tête stylisé avec une bannière médiévale */
+header {
+    background-color: #8b4513;
+    color: #ffd700;
+    padding: 1rem;
+    text-align: center;
+}
+
+/* Liens médiévaux stylisés */
+a, .btn-link {
+    color: #424242;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+/* Boutons avec des couleurs médiévales */
+.btn-primary {
+    color: #fff;
+    background-color: #8b4513;
+    border-color: #8b4513;
+}
+
+/* Styles spécifiques pour la section de contenu */
+.content {
+    background-color: #fff; /* Fond blanc pour un contraste élevé avec le fond médiéval */
+    padding: 1.5rem;
+    border-radius: 10px; /* Coins arrondis pour un aspect plus moderne */
+}
+
+/* Styles pour les messages de validation médiévaux */
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #008000; /* Vert pour les éléments valides */
+}
+
+.invalid {
+    outline: 1px solid #ff0000; /* Rouge pour les éléments invalides */
+}
+
+.validation-message {
+    color: #ff0000;
+}
+
+/* Barre d'erreur médiévale stylisée */
+#blazor-error-ui {
+    background: url('/ressource/Bannière.jpg') no-repeat center center;
+    background-size: cover;
+    padding: 1rem;
+    color: #fff;
+    text-align: center;
+}
+
+#blazor-error-ui::after {
+    content: "Une erreur est survenue.";
+}
