@@ -10,6 +10,11 @@ This project is a Blazor project for a Role Game. It is a project for the course
 
 ## Authors
 - Sebastian Diaz
+- Dylan Ramos
+
+## Requirements
+- [.NET SDK 7.0.15](https://dotnet.microsoft.com/en-us/download/visual-studio-sdks)
+- [PostgreSQL 16](https://www.postgresql.org/download/)
 
 ## Installation
 1. Clone the repository

@@ -1,0 +1,59 @@
+@page "/pays"
+@using BlazinRoleGame.Data
+@inject ISupportCRUD<Pays> paysService
+
+
+<PageTitle>Application Pays</PageTitle>
+
+<h1>The list of application Pays</h1>
+
+<p>In this section you can add more Pays <br />
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+        <RadzenLabel Text="Nom" />
+        <RadzenText>
+            <RadzenTextBox @bind-Value=@newPays.Nom />
+        </RadzenText>
+    </RadzenStack>
+
+</p>
+
+@if (pays == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var pays in paysList)
+            {
+                <tr>
+                    <td>@pays.nom</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    #region Properties
+
+    private Pays newPays = new Pays();
+
+    private List<Pays> paysList;
+    #endregion
+
+    #region Methods
+    protected override async Task OnInitializedAsync()
+    {
+        paysList = (await paysService.GetAllAsync()).ToList();
+    }
+
+    #endregion
+}

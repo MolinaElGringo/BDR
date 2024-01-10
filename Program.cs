@@ -11,8 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<ISupportCRUD<User>, UserService>();
-builder.Services.AddSingleton<ISupportCRUD<Personne>, PersonneService>();
+builder.Services.AddSingleton<ISupportCRUD<Pays>, PaysService>();;
 builder.Services.AddRadzenComponents();
 
 var app = builder.Build();
