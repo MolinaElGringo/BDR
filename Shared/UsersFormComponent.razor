@@ -1,0 +1,55 @@
+@using BlazinRoleGame.Data
+@using System.Text.Json
+@using Radzen.Blazor
+@using NotificationService = Radzen.NotificationService
+
+@inject NotificationService NotificationService
+@inject UserService userService
+
+
+<div>
+    <RadzenTemplateForm TItem="User" Data=@user Submit=@OnSubmit InvalidSubmit=@OnInvalidSubmit>
+        <RadzenStack>
+            <RadzenFormField Text="First Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="FirstName" @bind-Value=@user.FirstName />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="FirstName" Text="First name is required." />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Last Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="LastName" @bind-Value=@user.LastName />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="LastName" Text="Last name is required." />
+                </Helper>
+            </RadzenFormField>
+            <RadzenButton ButtonType="ButtonType.Submit" Text="Submit" ></RadzenButton>
+        </RadzenStack>
+    </RadzenTemplateForm>
+</div>
+
+
+@code {
+    private Variant variant = Variant.Filled;
+
+    class User
+    {
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
+    }
+
+    private User user = new User();
+
+    private void OnSubmit(User user)
+    {
+        /*userService.AddUser(user.FirstName, user.LastName);*/
+    }
+
+    private void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {
+        var errors = JsonSerializer.Serialize(args.Errors, new JsonSerializerOptions() { WriteIndented = true });
+    }
+}

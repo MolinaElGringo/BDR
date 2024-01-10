@@ -1,0 +1,4 @@
+"schema_nm","table_nm","obj_typ","ord","is_key","column_nm","data_typ","nullable","column_descr"
+"public","User","TBL",1,"PK","UserID","integer(32)","NOT NULL",NULL
+"public","User","TBL",2," ","FirstName","text","NOT NULL",NULL
+"public","User","TBL",3," ","LastName","text",NULL,NULL

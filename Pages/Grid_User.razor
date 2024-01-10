@@ -1,0 +1,143 @@
+@page "/GridUsers"
+@using BlazinRoleGame.Data
+@using System.Collections.ObjectModel
+@inject ISupportCRUD<User> userService
+@inject DialogService DialogService
+
+
+<PageTitle>View of all Users</PageTitle>
+
+<h2>Add, Update or Delete a user by selecting it</h2>
+
+<p>
+    <RadzenDataGrid AllowFiltering="true" FilterPopupRenderMode="PopupRenderMode.OnDemand"
+        FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="10"
+        AllowSorting="true" Data="@users" TItem="User" ColumnWidth="200px" SelectionMode="DataGridSelectionMode.Single"
+        @bind-Value=@SelectedUsers>
+        <Columns>
+            <RadzenDataGridColumn TItem="User" Property="UserID" Title="UserID" />
+            <RadzenDataGridColumn TItem="User" Property="FirstName" Title="First Name" />
+            <RadzenDataGridColumn TItem="User" Property="LastName" Title="Last Name" />
+        </Columns>
+    </RadzenDataGrid>
+</p>
+
+<p>
+    <RadzenTemplateForm TItem="User" Data=@user Submit=@OnSubmit InvalidSubmit=@OnInvalidSubmit>
+        <RadzenStack>
+            <RadzenFormField Text="First Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="FirstName" @bind-Value=@user.FirstName />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="FirstName" Text="First name is required."
+                        Change="@IsObjectSelected" />
+                </Helper>
+            </RadzenFormField>
+            <RadzenFormField Text="Last Name" Variant="@variant">
+                <ChildContent>
+                    <RadzenTextBox Name="LastName" @bind-Value=@user.LastName Change="@IsObjectSelected" />
+                </ChildContent>
+                <Helper>
+                    <RadzenRequiredValidator Component="LastName" Text="Last name is required." />
+                </Helper>
+            </RadzenFormField>
+            <RadzenButton ButtonType="ButtonType.Button" Text="Submit user" ButtonStyle="ButtonStyle.Primary"
+                Icon="add_circle_outline" Click=@(args => OnSubmit(user)) />
+            <RadzenButton ButtonType="ButtonType.Button" Text="Update user" ButtonStyle="ButtonStyle.Secondary"
+                Icon="add_circle_outline" Disabled=@buttonDisabled Click=@(args => OnSubmit(user)) />
+            <RadzenButton ButtonType="ButtonType.Button" @bind-Value=@SelectedUsers Click=@DeleteUser Text="Delete user"
+                ButtonStyle="ButtonStyle.Danger" Icon="report" />
+        </RadzenStack>
+    </RadzenTemplateForm>
+</p>
+
+@code {
+    #region Properties
+    private Variant variant = Variant.Filled;
+    private bool buttonDisabled = true;
+    private ObservableCollection<User> users;
+    private IList<User>? SelectedUsers;
+    private User user = new User();
+    #endregion
+
+    #region Methods
+    protected override async Task OnInitializedAsync()
+    {
+        users = new ObservableCollection<User>(await userService.GetAllAsync());
+    }
+
+
+    private async void OnSubmit(User user)
+    {
+        if (checkUserSelected())
+        {
+            UpdateUser(user);
+            return;
+        }
+
+        var result = await userService.AddAsync(user);
+        
+        foreach(User u in result)
+        {
+            users.Add(u);
+        }
+        
+
+        //StateHasChanged();
+    }
+
+    private void IsObjectSelected()
+    {
+        buttonDisabled = !checkUserSelected();
+    }
+
+    private bool checkUserSelected()
+    {
+        return SelectedUsers != null && SelectedUsers.Any();
+    }
+
+    private void OnInvalidSubmit(FormInvalidSubmitEventArgs args)
+    {
+        var errors = System.Text.Json.JsonSerializer.Serialize(args.Errors, new System.Text.Json.JsonSerializerOptions()
+            {
+                WriteIndented = true
+            });
+    }
+
+    private void ClearSelection()
+    {
+        SelectedUsers = null;
+    }
+
+    private async void UpdateUser(User userUpdate)
+    {
+        User usertoUpdate = SelectedUsers.FirstOrDefault();
+        usertoUpdate.FirstName = userUpdate.FirstName;
+        usertoUpdate.LastName = userUpdate.LastName;
+        await userService.UpdateAsync(usertoUpdate);
+
+        //StateHasChanged();
+    }
+
+    private async void DeleteUser()
+    {
+        if (checkUserSelected())
+        {
+            foreach (User userToDelete in SelectedUsers)
+            {
+                if (users.Remove(userToDelete))
+                {
+                    await userService.DeleteAsync(userToDelete);
+                }
+            }
+
+            //StateHasChanged();
+            
+        }
+
+    }
+
+    #endregion
+    
+}

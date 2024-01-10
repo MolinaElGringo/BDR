@@ -1,0 +1,97 @@
+@page "/users"
+@using BlazinRoleGame.Data
+@inject ISupportCRUD<User> userService
+
+
+<PageTitle>Application Users</PageTitle>
+
+<h1>The list of application users</h1>
+
+<p>In this section you can add more Users <br />
+    <RadzenStack Orientation="Orientation.Horizontal" AlignItems="AlignItems.Center">
+        <RadzenLabel Text="First Name" />
+        <RadzenText>
+            <RadzenTextBox @bind-Value=@newUser.FirstName Change=@OnChangeFirst />
+        </RadzenText>
+
+        <RadzenLabel Text="Last Name" />
+        <RadzenText>
+            <RadzenTextBox @bind-Value=@newUser.LastName Change=@OnChangeLast />
+        </RadzenText>
+
+        <RadzenButton @bind-Value=@buttonDisabled Click="@onclickAdd" Change="@buttonDisabled"
+            Disabled="@buttonDisabled">+ Submit</RadzenButton>
+    </RadzenStack>
+
+</p>
+
+@if (users == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>First name</th>
+                <th>Last name</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in users)
+            {
+                <tr>
+                    <td>@user.UserID</td>
+                    <td>@user.FirstName</td>
+                    <td>@user.LastName</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+
+    #region Properties
+
+    private User newUser = new User();
+
+    private bool buttonDisabled = true;
+    private List<User> users;
+    #endregion
+
+    #region Methods
+    protected override async Task OnInitializedAsync()
+    {
+        users = (await userService.GetAllAsync()).ToList();
+
+    }
+
+
+    private void OnChangeFirst(string firstname)
+    {
+        UpdateButton();
+    }
+
+    private void OnChangeLast(string lastname)
+    {
+        UpdateButton();
+    }
+
+    private void UpdateButton()
+    {
+        buttonDisabled = string.IsNullOrWhiteSpace(newUser.FirstName) ||
+        string.IsNullOrWhiteSpace(newUser.LastName);
+
+    }
+
+    private async void onclickAdd()
+    {
+       var result = await userService.AddAsync(newUser);
+    }
+
+
+    #endregion
+}
